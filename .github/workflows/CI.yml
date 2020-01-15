@@ -17,3 +17,10 @@ jobs:
       run: dotnet build --configuration Release
     - name: Run unit tests
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit*]*"
+    - name: cobertura-report
+      uses: 5monkeys/cobertura-action@v1
+      with:
+        # The GITHUB_TOKEN for this repo
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        path: test/**/coverage.cobertura.xml
+        skip_covered: false
