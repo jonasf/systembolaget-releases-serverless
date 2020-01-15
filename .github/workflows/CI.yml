@@ -16,4 +16,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
     - name: Run unit tests
-      run: dotnet test
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit*]*"
