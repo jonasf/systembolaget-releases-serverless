@@ -24,4 +24,4 @@ jobs:
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit*]*"
     - name: Create deploy packages for AWS Lambda functions
       run: |
-         dotnet lambda package -pl src\Systembolaget.Releases.Indexer -c Release -o dist/Systembolaget.Releases.Indexer.zip        
+         dotnet lambda package -pl src/Systembolaget.Releases.Indexer -c Release -o dist/Systembolaget.Releases.Indexer.zip        
