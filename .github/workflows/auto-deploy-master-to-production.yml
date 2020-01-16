@@ -1,0 +1,25 @@
+name: Auto deploy master to production
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build_and_release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.102
+    - name: Build
+      run: dotnet build --configuration Release
+    - name: Run unit tests
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:Exclude="[xunit*]*"
+    - name: Create deploy packages for AWS Lambda functions
+      run: |
+         dotnet lambda package -pl src\Systembolaget.Releases.Indexer -c Release -o dist/Systembolaget.Releases.Indexer.zip        
