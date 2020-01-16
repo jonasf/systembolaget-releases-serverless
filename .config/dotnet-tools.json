@@ -7,6 +7,12 @@
       "commands": [
         "reportgenerator"
       ]
+    },
+    "amazon.lambda.tools": {
+      "version": "3.3.1",
+      "commands": [
+        "dotnet-lambda"
+      ]
     }
   }
 }
