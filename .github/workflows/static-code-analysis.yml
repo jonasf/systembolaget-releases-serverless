@@ -1,0 +1,19 @@
+name: Static code analysis
+
+on:
+  schedule:
+    - cron:  '0 12 * * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Static code analysis
+      uses: snyk/actions/dotnet@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=Systembolaget.Releases.sln
