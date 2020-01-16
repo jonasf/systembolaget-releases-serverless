@@ -13,6 +13,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.0.102
+    - name: Restore .NET tools
+      run: dotnet tool restore
     - name: Build
       run: dotnet build --configuration Release
     - name: Run unit tests
