@@ -25,7 +25,7 @@ jobs:
     - name: Create deploy packages for AWS Lambda functions
       run: |
          dotnet lambda package -pl src/Systembolaget.Releases.Indexer -c Release -o dist/Systembolaget.Releases.Indexer.zip        
-    - name: default deploy
+    - name: Deploy Systembolaget-Releases-Indexer to AWS Lambda
       uses: appleboy/lambda-action@master
       with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
