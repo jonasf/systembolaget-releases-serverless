@@ -11,6 +11,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.102
+    - name: Restore .NET tools
+      run: dotnet tool restore
+    - name: Build
+      run: dotnet build --configuration Release
     - name: Static code analysis
       uses: snyk/actions/dotnet@master
       env:
