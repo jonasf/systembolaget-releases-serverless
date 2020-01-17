@@ -1,13 +1,29 @@
 using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.Json;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using Systembolaget.Releases.Indexer.Service;
 
 namespace Systembolaget.Releases.Indexer
 {
     public class Function
     {
+        private static ServiceProvider _serviceProvider;
+
+        static Function()
+        {
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
+        private static void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddTransient<IUpdateReleasesService, UpdateReleasesService>();
+        }
+
         /// <summary>
         /// The main entry point for the custom runtime.
         /// </summary>
@@ -34,6 +50,8 @@ namespace Systembolaget.Releases.Indexer
         /// <returns></returns>
         public static string FunctionHandler(string input, ILambdaContext context)
         {
+            var updateReleasesService = _serviceProvider.GetService<IUpdateReleasesService>();
+            updateReleasesService.UpdateAsync();
             return input?.ToUpper();
         }
     }
