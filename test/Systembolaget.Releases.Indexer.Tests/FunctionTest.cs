@@ -13,7 +13,7 @@ namespace Systembolaget.Releases.Indexer.Tests
 {
     public class FunctionTest
     {
-        [Fact]
+        [Fact(Skip = "Integration test")]
         public void TestToUpperFunction()
         {
 
