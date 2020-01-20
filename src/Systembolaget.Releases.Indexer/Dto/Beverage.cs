@@ -1,62 +1,63 @@
-﻿using System;
+﻿using System.Xml.Serialization;
 
 namespace Systembolaget.Releases.Indexer.Dto
 {
+    [XmlRoot(ElementName = "artikel")]
     public class Beverage
 	{
-        //<nr>43301</nr>
+        [XmlElement(ElementName = "nr")]
         public int ArticleNumber { get; set; }
-        //<Artikelid>7303</Artikelid>
+        [XmlElement(ElementName = "Artikelid")]
         public int ArticleId { get; set; }
-        //<Varnummer>433</Varnummer>
-        public string PartNumber { get; set; }
-        //<Namn>Bowmore</Namn>
+        [XmlElement(ElementName = "Varnummer")]
+        public int PartNumber { get; set; }
+        [XmlElement(ElementName = "Namn")]
         public string Name { get; set; }
-        //<Namn2>12 Years</Namn2>
+        [XmlElement(ElementName = "Namn2")]
         public string SecondaryName { get; set; }
-        //<Prisinklmoms>399.00</Prisinklmoms>
+        [XmlElement(ElementName = "Prisinklmoms")]
         public decimal PriceIncVat { get; set; }
-        //<Volymiml>700.00</Volymiml>
+        [XmlElement(ElementName = "Volymiml")]
         public decimal VolumeMl { get; set; }
-        //<PrisPerLiter>570.00</PrisPerLiter>
+        [XmlElement(ElementName = "PrisPerLiter")]
         public decimal PricePerLiter { get; set; }
-        //<Saljstart>1995-02-13</Saljstart>
+        [XmlElement(ElementName = "Saljstart")]
         public string ReleaseDate { get; set; }
-        //<Utgått>0</Utgått>
+        [XmlElement(ElementName = "Utgått")]
         public bool Discontinued { get; set; }
-        //<Varugrupp>Whisky</Varugrupp>
+        [XmlElement(ElementName = "Varugrupp")]
         public string Group { get; set; }
-        //<Typ>Maltwhisky</Typ>
+        [XmlElement(ElementName = "Typ")]
         public string Type { get; set; }
-        //<Stil/>
+        [XmlElement(ElementName = "Stil")]
         public string Style { get; set; }
-        //<Forpackning>Flaska</Forpackning>
+        [XmlElement(ElementName = "Forpackning")]
         public string Packaging { get; set; }
-        //<Forslutning/>
+        [XmlElement(ElementName = "Forslutning")]
         public string Seal { get; set; }
-        //<Ursprung>Skottland</Ursprung>
+        [XmlElement(ElementName = "Ursprung")]
         public string Origin { get; set; }
-        //<Ursprunglandnamn>Storbritannien</Ursprunglandnamn>
+        [XmlElement(ElementName = "Ursprunglandnamn")]
         public string OriginCountry { get; set; }
-        //<Producent>Morrison's Bowmore Distillery</Producent>
+        [XmlElement(ElementName = "Producent")]
         public string Producer { get; set; }
-        //<Leverantor>Edrington Sweden AB</Leverantor>
+        [XmlElement(ElementName = "Leverantor")]
         public string Supplier { get; set; }
-        //<Argang/>
-        public int Vintage { get; set; }
-        //<Provadargang/>
-        public int SampledYear { get; set; }
-        //<Alkoholhalt>40.00%</Alkoholhalt>
-        public decimal AlcoholContent { get; set; }
-        //<Sortiment>FS</Sortiment>
+        [XmlElement(ElementName = "Argang")]
+        public string Vintage { get; set; }
+        [XmlElement(ElementName = "Provadargang")]
+        public string SampledYear { get; set; }
+        [XmlElement(ElementName = "Alkoholhalt")]
+        public string AlcoholContent { get; set; }
+        [XmlElement(ElementName = "Sortiment")]
         public string ProductRangeAbbreviation { get; set; }
-        //<SortimentText>Fast sortiment</SortimentText>
+        [XmlElement(ElementName = "SortimentText")]
         public string ProductRange { get; set; }
-        //<Ekologisk>0</Ekologisk>
+        [XmlElement(ElementName = "Ekologisk")]
         public bool Organic { get; set; }
-        //<Etiskt>0</Etiskt>
+        [XmlElement(ElementName = "Etiskt")]
         public bool EthicalManufacturing { get; set; }
-        //<Koscher>0</Koscher>
+        [XmlElement(ElementName = "Koscher")]
         public bool Koscher { get; set; }
 
     }
