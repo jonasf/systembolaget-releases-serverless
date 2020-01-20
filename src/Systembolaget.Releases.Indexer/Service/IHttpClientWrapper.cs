@@ -2,8 +2,8 @@
 
 namespace Systembolaget.Releases.Indexer.Service
 {
-    public interface IUpdateReleasesService
+    public interface IHttpClientWrapper
     {
-        Task UpdateAsync();
+        Task<string> GetData();
     }
 }
