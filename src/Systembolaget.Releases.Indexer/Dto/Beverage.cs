@@ -21,7 +21,7 @@ namespace Systembolaget.Releases.Indexer.Dto
         //<PrisPerLiter>570.00</PrisPerLiter>
         public decimal PricePerLiter { get; set; }
         //<Saljstart>1995-02-13</Saljstart>
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
         //<Utgått>0</Utgått>
         public bool Discontinued { get; set; }
         //<Varugrupp>Whisky</Varugrupp>

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Systembolaget.Releases.Indexer.DataSource;
 using Systembolaget.Releases.Indexer.Dto;
@@ -20,11 +22,16 @@ namespace Systembolaget.Releases.Indexer.Service
         {
             var beverages = await _beverageDataService.GetBeverageData();
 
-            // TODO: group data
-            var releases = new List<Release> { new Release { } };
+            var allReleases = beverages.GroupBy(x => new { x.ReleaseDate, x.Group }, (key, group) => new Release
+            {
+                ReleaseDate = DateTime.Parse(key.ReleaseDate),
+                Group = key.Group,
+                Beverages = group
+            });
 
-            //save data
-            await _releasesDataSource.UpdateReleases(releases);
+            var futureReleases = allReleases.Where(x => x.ReleaseDate > DateTime.Now.AddDays(-1));
+
+            await _releasesDataSource.UpdateReleases(futureReleases);
         }
     }
 }

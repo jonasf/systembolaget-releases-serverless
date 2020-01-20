@@ -55,18 +55,47 @@ namespace Systembolaget.Releases.Indexer.Tests
 
             await _sut.UpdateAsync();
 
-            // TODO: Verify grouping
-            await _releasesDataSource.Received().UpdateReleases(Arg.Is<IEnumerable<Release>>(s => ValidateGrouping(s)));
-
-            
+            await _releasesDataSource.Received().UpdateReleases(Arg.Is<IEnumerable<Release>>(s => ValidateDateAndSubGroupGrouping(s)));
         }
 
-        private bool ValidateGrouping(IEnumerable<Release> releases)
+        [Fact]
+        public async Task Should_Not_Include_Past_Releases()
         {
-            Assert.Equal(6, releases.Count());
+            var beverages = new List<Beverage>
+            {
+                CreateBeverage(DateTime.Now.AddDays(10), BeerGroup),
+                CreateBeverage(DateTime.Now.AddDays(10), BeerGroup),
+                CreateBeverage(DateTime.Now.AddDays(-2), BeerGroup),
+                CreateBeverage(DateTime.Now.AddDays(12), WhiteWhineGroup),
+                CreateBeverage(DateTime.Now.AddDays(12), WhiteWhineGroup),
+                CreateBeverage(DateTime.Now.AddDays(-1), WhiteWhineGroup),
+                CreateBeverage(DateTime.Now.AddDays(17), WhiteWhineGroup),
+                CreateBeverage(DateTime.Now.AddDays(-15), WhiskyGroup),
+                CreateBeverage(DateTime.Now.AddDays(20), WhiskyGroup),
+                CreateBeverage(DateTime.Now.AddDays(20), WhiskyGroup),
+            };
+            _beverageDataService.GetBeverageData().Returns(beverages);
+
+            await _sut.UpdateAsync();
+
+            await _releasesDataSource.Received().UpdateReleases(Arg.Is<IEnumerable<Release>>(s => ValidateExlusionOfOldReleases(s)));
+        }
+
+        private bool ValidateExlusionOfOldReleases(IEnumerable<Release> releases)
+        {
+            Assert.Equal(4, releases.Count());
+            Assert.Equal(1, releases.Count(s => s.Group == BeerGroup));
+            Assert.Equal(2, releases.Count(s => s.Group == WhiteWhineGroup));
+            Assert.Equal(1, releases.Count(s => s.Group == WhiskyGroup));
+            return true;
+        }
+
+        private bool ValidateDateAndSubGroupGrouping(IEnumerable<Release> releases)
+        {
+            Assert.Equal(7, releases.Count());
             Assert.Equal(2, releases.Count(s => s.Group == BeerGroup));
             Assert.Equal(3, releases.Count(s => s.Group == WhiteWhineGroup));
-            Assert.Equal(1, releases.Count(s => s.Group == WhiskyGroup));
+            Assert.Equal(2, releases.Count(s => s.Group == WhiskyGroup));
             return true;
         }
 
@@ -74,7 +103,7 @@ namespace Systembolaget.Releases.Indexer.Tests
         {
             return new Beverage
             {
-                ReleaseDate = releaseDate,
+                ReleaseDate = releaseDate.ToString("yyyy-MM-dd"),
                 Group = group
             };
         }
