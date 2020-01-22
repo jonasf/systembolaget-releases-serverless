@@ -1,0 +1,51 @@
+{
+    "TableName": "SystembolagetReleases",
+    "AttributeDefinitions": [ 
+        {
+            "AttributeName": "ReleaseDate",
+            "AttributeType": "S"
+        },
+        {
+            "AttributeName": "Group",
+            "AttributeType": "S"
+        }
+    ],
+    "KeySchema": [ 
+        {
+            "AttributeName": "ReleaseDate",
+            "KeyType": "HASH"
+        },
+        {
+            "AttributeName": "Group",
+            "KeyType": "RANGE"
+        }
+    ],
+    "GlobalSecondaryIndexes": [ 
+       { 
+          "IndexName": "GroupIndex",
+          "KeySchema": [ 
+             { 
+                "AttributeName": "Group",
+                "KeyType": "HASH"
+             }
+          ],
+          "Projection": { 
+             "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": { 
+             "ReadCapacityUnits": 1,
+             "WriteCapacityUnits": 1
+          }
+       }
+    ],
+    "ProvisionedThroughput": { 
+       "ReadCapacityUnits": 1,
+       "WriteCapacityUnits": 1
+    },
+    "Tags": [ 
+       { 
+          "Key": "Version",
+          "Value": "1"
+       }
+    ]
+ }
