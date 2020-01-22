@@ -1,68 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Systembolaget.Releases.Indexer.Dto;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DocumentModel;
 
 namespace Systembolaget.Releases.Indexer.DataSource
 {
     public class ReleasesDataSource : IReleasesDataSource
     {
-        public Task UpdateReleases(IEnumerable<Release> releases)
+        private Table _table;
+
+        public ReleasesDataSource()
         {
-            // TODO: Actually save the data
+            IAmazonDynamoDB dynamoDbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig
+            {
+                ServiceURL = "http://localhost:8000"
+            });
+            _table = Table.LoadTable(dynamoDbClient, "SystembolagetReleases");
+        }
+
+        public async Task UpdateReleases(IEnumerable<Release> releases)
+        {
             foreach (var release in releases)
             {
-                Console.WriteLine($"Release for date {release.ReleaseDate} in group {release.Group}");
+                var beverages = new DynamoDBList();
                 foreach (var beverage in release.Beverages)
                 {
-                    ObjectDump.Write(beverage);
+                    beverages.Add(JsonSerializer.Serialize(beverage));
                 }
+
+                var document = new Document();
+                document["ReleaseDate"] = release.ReleaseDate;
+                document["Group"] = release.Group;
+                document["NumberOfBeverages"] = release.NumberOfBeverages;
+                document["Beverages"] = beverages;
+
+                await _table.PutItemAsync(document);
             }
-
-            return Task.CompletedTask;
-        }
-    }
-
-    public static class ObjectDump
-    {
-        public static void Write(object obj)
-        {
-            if (obj == null)
-            {
-                Console.WriteLine("Object is null");
-                return;
-            }
-
-            var props = GetProperties(obj);
-
-            if (props.Count > 0)
-            {
-                Console.WriteLine("-------------------------");
-            }
-
-            foreach (var prop in props)
-            {
-                Console.Write(prop.Key);
-                Console.Write(": ");
-                Console.WriteLine(prop.Value);
-            }
-        }
-
-        private static Dictionary<string, string> GetProperties(object obj)
-        {
-            var props = new Dictionary<string, string>();
-            if (obj == null)
-                return props;
-
-            var type = obj.GetType();
-            foreach (var prop in type.GetProperties())
-            {
-                var val = prop.GetValue(obj, new object[] { });
-                var valStr = val == null ? "" : val.ToString();
-                props.Add(prop.Name, valStr);
-            }
-
-            return props;
         }
     }
 }
