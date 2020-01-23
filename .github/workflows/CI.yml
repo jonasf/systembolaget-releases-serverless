@@ -1,6 +1,6 @@
 name: CI build for all branches
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
