@@ -4,21 +4,31 @@ using System.Threading.Tasks;
 using Systembolaget.Releases.Indexer.Dto;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.Runtime;
 
 namespace Systembolaget.Releases.Indexer.DataSource
 {
     public class ReleasesDataSource : IReleasesDataSource
     {
-        private Table _table;
-
         public ReleasesDataSource()
         {
-            IAmazonDynamoDB dynamoDbClient = new AmazonDynamoDBClient(new AmazonDynamoDBConfig
+#if DEBUG
+            var config = new AmazonDynamoDBConfig
             {
                 ServiceURL = "http://localhost:8000"
-            });
+            };
+            IAmazonDynamoDB dynamoDbClient = new AmazonDynamoDBClient(config);
+#elif RELEASE
+            var config = new AmazonDynamoDBConfig
+            {
+                ServiceURL = FunctionConfig.DatabaseEndpoint
+            };
+            IAmazonDynamoDB dynamoDbClient = new AmazonDynamoDBClient(new EnvironmentVariablesAWSCredentials(), config);
+#endif
             _table = Table.LoadTable(dynamoDbClient, "SystembolagetReleases");
         }
+
+        private readonly Table _table;
 
         public async Task UpdateReleases(IEnumerable<Release> releases)
         {
