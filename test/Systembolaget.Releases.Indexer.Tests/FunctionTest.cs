@@ -8,20 +8,18 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.TestUtilities;
 
 using Systembolaget.Releases.Indexer;
+using Amazon.Lambda.CloudWatchLogsEvents;
 
 namespace Systembolaget.Releases.Indexer.Tests
 {
     public class FunctionTest
     {
         [Fact(Skip = "Integration test")]
-        public async Task TestToUpperFunction()
+        public async Task InvokeFunction()
         {
 
-            // Invoke the lambda function and confirm the string was upper cased.
-            var context = new TestLambdaContext();
-            var upperCase = await Function.FunctionHandler("hello world", context);
-
-            Assert.Equal("HELLO WORLD", upperCase);
+            // Invoke the lambda function.
+            await Function.FunctionHandler(new CloudWatchLogsEvent());
         }
     }
 }
