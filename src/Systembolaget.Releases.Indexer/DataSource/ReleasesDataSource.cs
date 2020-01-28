@@ -41,7 +41,7 @@ namespace Systembolaget.Releases.Indexer.DataSource
                 }
 
                 var document = new Document();
-                document["ReleaseDate"] = release.ReleaseDate;
+                document["ReleaseDate"] = release.ReleaseDate.ToShortDateString();
                 document["Group"] = release.Group;
                 document["NumberOfBeverages"] = release.NumberOfBeverages;
                 document["Beverages"] = beverages;
