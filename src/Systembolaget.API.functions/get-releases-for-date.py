@@ -1,18 +1,6 @@
 import os
 import boto3
-import json
-import decimal
 from botocore.exceptions import ClientError
-
-
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            if o % 1 > 0:
-                return float(o)
-            else:
-                return int(o)
-        return super(DecimalEncoder, self).default(o)
 
 
 def get_releases(event, context):
@@ -33,8 +21,7 @@ def get_releases(event, context):
         print(e.response['Error']['Message'])
     else:
         if 'Item' in response:
-            beverages = json.dumps(response['Item']['Beverages'],
-                                   indent=4, cls=DecimalEncoder)
+            beverages = response['Item']['Beverages']
 
     return {
         'data': beverages
