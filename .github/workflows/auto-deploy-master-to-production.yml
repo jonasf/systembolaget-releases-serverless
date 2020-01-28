@@ -33,3 +33,23 @@ jobs:
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: Systembolaget-Releases-Indexer
         zip_file: dist/Systembolaget.Releases.Indexer.zip
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 Systembolaget.API.functions/
+    - name: Deploy Systembolaget-API-GetReleasesForDate to AWS Lambda
+      uses: appleboy/lambda-action@master
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
+        function_name: Systembolaget-API-GetReleasesForDate
+        source: Systembolaget.API.functions/get-releases-for-date.py
