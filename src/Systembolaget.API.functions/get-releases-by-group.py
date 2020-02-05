@@ -32,8 +32,8 @@ def get_releases(event, context):
         print(e.response['Error']['Message'])
     else:
         for item in response['Items']:
-                releases.append(Release(item['ReleaseDate'],
-                                str(item['NumberOfBeverages'])))
+            releases.append(Release(item['ReleaseDate'],
+                            str(item['NumberOfBeverages'])))
 
     return {
         'data': json.dumps(releases, cls=MyEncoder)
