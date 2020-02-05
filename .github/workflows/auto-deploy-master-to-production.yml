@@ -25,6 +25,18 @@ jobs:
     - name: Create deploy package for Systembolaget-Releases-Indexer
       run: |
          dotnet lambda package -pl src/Systembolaget.Releases.Indexer -c Release -o dist/Systembolaget.Releases.Indexer.zip        
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r src/Systembolaget.API.functions/requirements.txt
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 src/Systembolaget.API.functions/
     - name: Deploy Systembolaget-Releases-Indexer to AWS Lambda
       uses: appleboy/lambda-action@master
       with:
@@ -33,18 +45,6 @@ jobs:
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: Systembolaget-Releases-Indexer
         zip_file: dist/Systembolaget.Releases.Indexer.zip
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r src/Systembolaget.API.functions/requirements.txt
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8 src/Systembolaget.API.functions/
     - name: Deploy Systembolaget-API-GetReleasesForDate to AWS Lambda
       uses: appleboy/lambda-action@master
       with:
