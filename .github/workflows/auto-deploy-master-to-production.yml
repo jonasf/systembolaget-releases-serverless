@@ -37,6 +37,14 @@ jobs:
       run: |
         pip install flake8
         flake8 src/Systembolaget.API.functions/
+    - name: Set up Node js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.6'
+    - name: Build Web
+      run: |
+        npm install --prefix src/systembolaget.releases.web
+        npm run build --prefix src/systembolaget.releases.web
     - name: Deploy Systembolaget-Releases-Indexer to AWS Lambda
       uses: appleboy/lambda-action@master
       with:
