@@ -20,11 +20,15 @@ export class ReleasesForBeverage extends Component {
           .then(response => response.json())
           .then(payload => {
             this.setState({
-                releases: JSON.parse(payload.data).sort()
+                releases: JSON.parse(payload.data).sort(this.compare)
             });
           });
-      }
+    }
 
+    compare(a, b) {
+        return new Date(b.date) - new Date(a.date);
+    }
+    
     render() {
         return (
             <div>

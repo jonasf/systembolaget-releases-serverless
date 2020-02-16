@@ -17,10 +17,20 @@ export class Release extends Component {
           .then(response => response.json())
           .then(payload => {
             this.setState({
-                beverages: JSON.parse(payload.data).sort()
+                beverages: JSON.parse(payload.data).sort(this.compare)
             });
-          });
-      }
+        });
+    }
+
+    compare(a, b) {
+        if ( a.Name < b.Name ){
+            return -1;
+        }
+        if ( a.Name > b.Name ){
+            return 1;
+        }
+        return 0;
+    }
 
     render() {
         return (
