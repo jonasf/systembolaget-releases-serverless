@@ -5,7 +5,11 @@ export class About extends Component {
 
     render() {
         return (
-            <div>About this site.</div>
+            <div>
+                <h1>Om</h1>
+                <p>Den här sidan ger en enkel översikt över alla nyheter på Systembolaget.</p>
+                <p>Systembolagets <a href="https://www.systembolaget.se/api/" target="_blank">öppna API</a> används som datakälla.</p>
+            </div>
         );
     }
 }

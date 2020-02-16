@@ -27,14 +27,17 @@ export class ReleasesForBeverage extends Component {
 
     render() {
         return (
-            <ul className="list-group">
-                {this.state.releases.map(release => (
-                    <li className="list-group-item d-flex justify-content-between align-items-center" key={release.date}>
-                        <Link to={`/release/${this.state.beverage}/` + encodeURIComponent(release.date)}>{release.date}</Link>
-                        <span className="badge badge-primary badge-pill">{release.count}</span>
-                    </li>
-                ))}
-            </ul>
+            <div>
+                <h1>{this.state.beverage}</h1>
+                <ul className="list-group">
+                    {this.state.releases.map(release => (
+                        <li className="list-group-item d-flex justify-content-between align-items-center" key={release.date}>
+                            <Link to={`/release/${this.state.beverage}/` + encodeURIComponent(release.date)}>{release.date}</Link>
+                            <span className="badge badge-primary badge-pill">{release.count}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         );
     }
 }

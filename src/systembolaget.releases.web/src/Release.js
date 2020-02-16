@@ -24,13 +24,18 @@ export class Release extends Component {
 
     render() {
         return (
-            <ul className="list-group">
-                {this.state.beverages.map(beverage => (
-                    <li className="list-group-item" key={beverage.ArticleNumber}>
-                        {beverage.Name} {beverage.SecondaryName}, {beverage.Producer}, {beverage.VolumeMl} ml, {beverage.AlcoholContent}, {beverage.PriceIncVat} kr
-                    </li>
-                ))}
-            </ul>
+            <div>
+                <h1>Nytt i {this.state.beverage} {this.state.releasedate}</h1>
+                <ul className="list-group">
+                    {this.state.beverages.map(beverage => (
+                        <li className="list-group-item" key={beverage.ArticleNumber}>
+                            <span className="font-weight-bold">{beverage.Name} {beverage.SecondaryName}</span> <span className="font-weight-light">({beverage.Type})</span><br/>
+                            <span className="font-weight-normal">{beverage.AlcoholContent}, {beverage.VolumeMl} ml, {beverage.PriceIncVat} kr ({beverage.ProductRangeAbbreviation})</span><br/>
+                            <span className="small">{beverage.Producer}, {beverage.OriginCountry}</span><br/> 
+                        </li>
+                    ))}
+                </ul>
+            </div>
         );
     }
 }
