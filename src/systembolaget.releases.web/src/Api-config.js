@@ -1,0 +1,1 @@
+export const API_ROOT = `https://4mgdqzawfg.execute-api.eu-north-1.amazonaws.com/prod`;
