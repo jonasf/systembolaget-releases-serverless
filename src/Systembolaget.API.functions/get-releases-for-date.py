@@ -1,5 +1,6 @@
 import os
 import boto3
+import json
 from botocore.exceptions import ClientError
 
 
@@ -21,8 +22,10 @@ def get_releases(event, context):
         print(e.response['Error']['Message'])
     else:
         if 'Item' in response:
-            beverages = response['Item']['Beverages']
+            data = response['Item']['Beverages']
+            for item in data:
+                beverages.append(json.loads(item))
 
     return {
-        'data': beverages
+        'data': json.dumps(beverages)
     }
