@@ -1,5 +1,6 @@
 import json
 
+
 def delete(event, context):
     # TODO implement
     return {
