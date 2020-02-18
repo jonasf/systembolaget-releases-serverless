@@ -33,15 +33,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r src/Systembolaget.API.functions/requirements.txt
-    - name: Lint with flake8
+    - name: Lint Python scripts
       run: |
         pip install flake8
         flake8 src/Systembolaget.API.functions/
+        flake8 src/Systembolaget.Releases.Maintenance/
     - name: Set up Node js
       uses: actions/setup-node@v1
       with:
         node-version: '12.6'
-    - name: Build Web
+    - name: Build and create deploy package for systembolaget.releases.web
       run: |
         npm install --prefix src/systembolaget.releases.web
         npm run build --prefix src/systembolaget.releases.web
@@ -77,6 +78,14 @@ jobs:
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: Systembolaget-API-GetReleasesByGroup
         source: src/Systembolaget.API.functions/get-releases-by-group.py
+    - name: Deploy Systembolaget-Releases-DeleteOldReleases to AWS Lambda
+      uses: appleboy/lambda-action@master
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION }}
+        function_name: Systembolaget-Releases-DeleteOldReleases
+        source: src/Systembolaget.Releases.Maintenance/delete-old-releases.py
     - name: Deploy systembolaget.releases.web website to AWS S3
       uses: jakejarvis/s3-sync-action@master
       with:
