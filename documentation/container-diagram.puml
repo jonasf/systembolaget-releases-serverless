@@ -1,0 +1,34 @@
+@startuml Container diagram for Systembolaget releases serverless
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+System_Boundary(aws, "Systembolaget releases serverless") {
+  Container(Web, "Web Application (AWS S3)", "ReactJs", "Displays the releases to the user.")
+  Container(API, "AWS API Gateway", "AWS Service", "Gets the data from the specific AWS Lambda functions.")
+  Container(RunIndexer, "AWS Cloudwatch Event", "AWS Service", "Triggers the indexer function on a schedule.")
+  Container(RunDeleteOldReleases, "AWS Cloudwatch Event", "AWS Service", "Triggers the cleanup function on a schedule.")
+  Container(Indexer, "AWS Lambda function", "C#", "Downloads the data from Systembolaget API, aggregates it and saves it to the database.")
+  Container(GetBeverageGroups, "AWS Lambda function", "Python", "Gets the beverages groups that has new releases from the database.")
+  Container(GetReleasesByGroup, "AWS Lambda function", "Python", "Gets the release dates for one specific beverage group from the database.")
+  Container(GetReleasesForDate, "AWS Lambda function", "Python", "Gets a list of released beverages for a specific date for a specific beverage group from the database.")
+  Container(DeleteOldReleases, "AWS Lambda function", "Python", "Removes releases that are in the past from the database.")
+  ContainerDb(SystembolagetReleases, "Database", "DynamoDB", "Stores the beverage releases grouped by date and beverage group.")
+}
+
+System_Ext(systembolaget, "Systembolaget API")
+Person_Ext(anonymous_user, "Anonymous User")
+
+Rel(anonymous_user, Web, "Reads about releases", "HTTPS")
+Rel(Web, API, "Gets data", "HTTPS")
+Rel(API, GetBeverageGroups, "Gets data", "HTTPS")
+Rel(GetBeverageGroups, SystembolagetReleases, "Gets data", "HTTPS")
+Rel(API, GetReleasesByGroup, "Gets data", "HTTPS")
+Rel(GetReleasesByGroup, SystembolagetReleases, "Gets data", "HTTPS")
+Rel(API, GetReleasesForDate, "Gets data", "HTTPS")
+Rel(GetReleasesForDate, SystembolagetReleases, "Gets data", "HTTPS")
+Rel(RunIndexer, Indexer, "Sends event", "HTTPS")
+Rel(Indexer, SystembolagetReleases, "Saves data", "HTTPS")
+Rel(Indexer, systembolaget, "Gets data", "HTTPS")
+Rel(RunDeleteOldReleases, DeleteOldReleases, "Sends event", "HTTPS")
+Rel(DeleteOldReleases, SystembolagetReleases, "Deletes data", "HTTPS")
+
+@enduml
