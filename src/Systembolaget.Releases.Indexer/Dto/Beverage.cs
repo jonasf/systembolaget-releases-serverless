@@ -1,63 +1,56 @@
-﻿using System.Xml.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Systembolaget.Releases.Indexer.Dto
 {
-    [XmlRoot(ElementName = "artikel")]
     public class Beverage
 	{
-        [XmlElement(ElementName = "nr")]
+        [JsonProperty("ProductNumber")]
         public int ArticleNumber { get; set; }
-        [XmlElement(ElementName = "Artikelid")]
+        [JsonProperty("ProductId")]
         public int ArticleId { get; set; }
-        [XmlElement(ElementName = "Varnummer")]
+        [JsonProperty("ProductNumberShort")]
         public int PartNumber { get; set; }
-        [XmlElement(ElementName = "Namn")]
+        [JsonProperty("ProductNameBold")]
         public string Name { get; set; }
-        [XmlElement(ElementName = "Namn2")]
+        [JsonProperty("ProductNameThin")]
         public string SecondaryName { get; set; }
-        [XmlElement(ElementName = "Prisinklmoms")]
+        [JsonProperty("Price")]
         public decimal PriceIncVat { get; set; }
-        [XmlElement(ElementName = "Volymiml")]
+        [JsonProperty("Volume")]
         public decimal VolumeMl { get; set; }
-        [XmlElement(ElementName = "PrisPerLiter")]
-        public decimal PricePerLiter { get; set; }
-        [XmlElement(ElementName = "Saljstart")]
+        [JsonProperty("SellStartDate")]
         public string ReleaseDate { get; set; }
-        [XmlElement(ElementName = "Utgått")]
+        [JsonProperty("IsCompletelyOutOfStock")]
         public bool Discontinued { get; set; }
-        [XmlElement(ElementName = "Varugrupp")]
+        [JsonProperty("SubCategory")]
         public string Group { get; set; }
-        [XmlElement(ElementName = "Typ")]
+        [JsonProperty("Type")]
         public string Type { get; set; }
-        [XmlElement(ElementName = "Stil")]
+        [JsonProperty("Style")]
         public string Style { get; set; }
-        [XmlElement(ElementName = "Forpackning")]
+        [JsonProperty("BottleTextShort")]
         public string Packaging { get; set; }
-        [XmlElement(ElementName = "Forslutning")]
+        [JsonProperty("Seal")]
         public string Seal { get; set; }
-        [XmlElement(ElementName = "Ursprung")]
-        public string Origin { get; set; }
-        [XmlElement(ElementName = "Ursprunglandnamn")]
+        [JsonProperty("Country")]
         public string OriginCountry { get; set; }
-        [XmlElement(ElementName = "Producent")]
+        [JsonProperty("ProducerName")]
         public string Producer { get; set; }
-        [XmlElement(ElementName = "Leverantor")]
+        [JsonProperty("SupplierName")]
         public string Supplier { get; set; }
-        [XmlElement(ElementName = "Argang")]
+        [JsonProperty("Vintage")]
         public string Vintage { get; set; }
-        [XmlElement(ElementName = "Provadargang")]
-        public string SampledYear { get; set; }
-        [XmlElement(ElementName = "Alkoholhalt")]
-        public string AlcoholContent { get; set; }
-        [XmlElement(ElementName = "Sortiment")]
+        [JsonProperty("AlcoholPercentage")]
+        public decimal AlcoholContent { get; set; }
+        [JsonProperty("Assortment")]
         public string ProductRangeAbbreviation { get; set; }
-        [XmlElement(ElementName = "SortimentText")]
+        [JsonProperty("AssortmentText")]
         public string ProductRange { get; set; }
-        [XmlElement(ElementName = "Ekologisk")]
+        [JsonProperty("IsOrganic")]
         public bool Organic { get; set; }
-        [XmlElement(ElementName = "Etiskt")]
+        [JsonProperty("IsEthical")]
         public bool EthicalManufacturing { get; set; }
-        [XmlElement(ElementName = "Koscher")]
+        [JsonProperty("IsKosher")]
         public bool Koscher { get; set; }
 
     }

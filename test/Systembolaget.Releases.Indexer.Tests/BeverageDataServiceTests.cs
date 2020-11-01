@@ -42,21 +42,18 @@ namespace Systembolaget.Releases.Indexer.Tests
             Assert.Equal("Grand Réserve", beverage.SecondaryName);
             Assert.Equal(239.00m, beverage.PriceIncVat);
             Assert.Equal(1500.00m, beverage.VolumeMl);
-            Assert.Equal(159.33m, beverage.PricePerLiter);
-            Assert.Equal("2007-01-11", beverage.ReleaseDate);
+            Assert.Equal("2007-01-11T00:00:00", beverage.ReleaseDate);
             Assert.False(beverage.Discontinued);
             Assert.Equal("Öl", beverage.Group);
             Assert.Equal("Ale belgisk stil", beverage.Type);
             Assert.Equal("Belgisk mörk ale", beverage.Style);
             Assert.Equal("Flaska", beverage.Packaging);
             Assert.Equal("Kapsyl", beverage.Seal);
-            Assert.Equal("Flandern", beverage.Origin);
             Assert.Equal("Belgien", beverage.OriginCountry);
             Assert.Equal("Chimay", beverage.Producer);
             Assert.Equal("TOMP Beer Wine & Spirits AB", beverage.Supplier);
             Assert.Equal("2006", beverage.Vintage);
-            Assert.Equal("2007", beverage.SampledYear);
-            Assert.Equal("9.00%", beverage.AlcoholContent);
+            Assert.Equal(9.00m, beverage.AlcoholContent);
             Assert.Equal("BS", beverage.ProductRangeAbbreviation);
             Assert.Equal("Ordervaror", beverage.ProductRange);
             Assert.False(beverage.Organic);
@@ -66,101 +63,127 @@ namespace Systembolaget.Releases.Indexer.Tests
 
         private Task<string> CreateSystembolagetApiData()
         {
-            return Task.FromResult(@"<artiklar xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
-                                    <skapad-tid>2020-01-17 05:12</skapad-tid>
-                                    <info>
-                                    <meddelande>Läs detta viktiga meddelande. Det är oerhört viktigt!</meddelande>
-                                    </info>
-                                    <artikel>
-                                    <nr>8286806</nr>
-                                    <Artikelid>248843</Artikelid>
-                                    <Varnummer>82868</Varnummer>
-                                    <Namn>Chimay Blå</Namn>
-                                    <Namn2>Grand Réserve</Namn2>
-                                    <Prisinklmoms>239.00</Prisinklmoms>
-                                    <Volymiml>1500.00</Volymiml>
-                                    <PrisPerLiter>159.33</PrisPerLiter>
-                                    <Saljstart>2007-01-11</Saljstart>
-                                    <Utgått>0</Utgått>
-                                    <Varugrupp>Öl</Varugrupp>
-                                    <Typ>Ale belgisk stil</Typ>
-                                    <Stil>Belgisk mörk ale</Stil>
-                                    <Forpackning>Flaska</Forpackning>
-                                    <Forslutning>Kapsyl</Forslutning>
-                                    <Ursprung>Flandern</Ursprung>
-                                    <Ursprunglandnamn>Belgien</Ursprunglandnamn>
-                                    <Producent>Chimay</Producent>
-                                    <Leverantor>TOMP Beer Wine & Spirits AB</Leverantor>
-                                    <Argang>2006</Argang>
-                                    <Provadargang>2007</Provadargang>
-                                    <Alkoholhalt>9.00%</Alkoholhalt>
-                                    <Sortiment>BS</Sortiment>
-                                    <SortimentText>Ordervaror</SortimentText>
-                                    <Ekologisk>0</Ekologisk>
-                                    <Etiskt>0</Etiskt>
-                                    <Koscher>0</Koscher>
-                                    </artikel>
-                                    <artikel>
-                                    <nr>165603</nr>
-                                    <Artikelid>1103641</Artikelid>
-                                    <Varnummer>1656</Varnummer>
-                                    <Namn>Westmalle</Namn>
-                                    <Namn2>Tripel</Namn2>
-                                    <Prisinklmoms>30.90</Prisinklmoms>
-                                    <Volymiml>330.00</Volymiml>
-                                    <PrisPerLiter>93.64</PrisPerLiter>
-                                    <Saljstart>2016-12-01</Saljstart>
-                                    <Utgått>0</Utgått>
-                                    <Varugrupp>Öl</Varugrupp>
-                                    <Typ>Ale belgisk stil</Typ>
-                                    <Stil>Trippel</Stil>
-                                    <Forpackning>Flaska</Forpackning>
-                                    <Forslutning>Kronkapsyl</Forslutning>
-                                    <Ursprung/>
-                                    <Ursprunglandnamn>Belgien</Ursprunglandnamn>
-                                    <Producent>Abbey of Westmalle</Producent>
-                                    <Leverantor>Galatea AB</Leverantor>
-                                    <Argang/>
-                                    <Provadargang/>
-                                    <Alkoholhalt>9.50%</Alkoholhalt>
-                                    <Sortiment>BS</Sortiment>
-                                    <SortimentText>Ordervaror</SortimentText>
-                                    <Ekologisk>0</Ekologisk>
-                                    <Etiskt>0</Etiskt>
-                                    <Koscher>0</Koscher>
-                                    <RavarorBeskrivning>Kornmalt och humle.</RavarorBeskrivning>
-                                    </artikel>
-                                    <artikel>
-                                    <nr>49102</nr>
-                                    <Artikelid>2325650</Artikelid>
-                                    <Varnummer>491</Varnummer>
-                                    <Namn>Bowmore</Namn>
-                                    <Namn2>12 Years</Namn2>
-                                    <Prisinklmoms>199.00</Prisinklmoms>
-                                    <Volymiml>350.00</Volymiml>
-                                    <PrisPerLiter>568.57</PrisPerLiter>
-                                    <Saljstart>2017-09-01</Saljstart>
-                                    <Utgått>0</Utgått>
-                                    <Varugrupp>Whisky</Varugrupp>
-                                    <Typ>Maltwhisky</Typ>
-                                    <Stil/>
-                                    <Forpackning>Flaska</Forpackning>
-                                    <Forslutning/>
-                                    <Ursprung>Skottland</Ursprung>
-                                    <Ursprunglandnamn>Storbritannien</Ursprunglandnamn>
-                                    <Producent>Jim Beam Brands</Producent>
-                                    <Leverantor>Edrington Sweden AB</Leverantor>
-                                    <Argang/>
-                                    <Provadargang/>
-                                    <Alkoholhalt>40.00%</Alkoholhalt>
-                                    <Sortiment>FS</Sortiment>
-                                    <SortimentText>Fast sortiment</SortimentText>
-                                    <Ekologisk>0</Ekologisk>
-                                    <Etiskt>0</Etiskt>
-                                    <Koscher>0</Koscher>
-                                    <RavarorBeskrivning>Kornmalt.</RavarorBeskrivning>
-                                    </artikel>
-                                    </artiklar>");
+            return Task.FromResult(@"[{
+                ""ProductId"": ""248843"",
+                ""ProductNumber"": ""8286806"",
+                ""ProductNameBold"": ""Chimay Blå"",
+                ""ProductNameThin"": ""Grand Réserve"",
+                ""Category"": ""Öl"",
+                ""ProductNumberShort"": ""82868"",
+                ""ProducerName"": ""Chimay"",
+                ""SupplierName"": ""TOMP Beer Wine & Spirits AB"",
+                ""IsKosher"": false,
+                ""BottleTextShort"": ""Flaska"",
+                ""Seal"": ""Kapsyl"",
+                ""RestrictedParcelQuantity"": 0,
+                ""IsOrganic"": false,
+                ""IsEthical"": false,
+                ""EthicalLabel"": null,
+                ""IsWebLaunch"": false,
+                ""SellStartDate"": ""2007-01-11T00:00:00"",
+                ""IsCompletelyOutOfStock"": false,
+                ""IsTemporaryOutOfStock"": false,
+                ""AlcoholPercentage"": 9.00,
+                ""Volume"": 1500.00,
+                ""Price"": 239.00,
+                ""Country"": ""Belgien"",
+                ""OriginLevel1"": null,
+                ""OriginLevel2"": null,
+                ""Vintage"": 2006,
+                ""SubCategory"": ""Öl"",
+                ""Type"": ""Ale belgisk stil"",
+                ""Style"": ""Belgisk mörk ale"",
+                ""AssortmentText"": ""Ordervaror"",
+                ""BeverageDescriptionShort"": ""Öl, Ale, Belgisk mörk ale"",
+                ""Usage"": null,
+                ""Taste"": null,
+                ""Assortment"": ""BS"",
+                ""RecycleFee"": 0.00,
+                ""IsManufacturingCountry"": true,
+                ""IsRegionalRestricted"": false,
+                ""IsInStoreSearchAssortment"": null,
+                ""IsNews"": false
+            },{
+                ""ProductId"": ""1103641"",
+                ""ProductNumber"": ""165603"",
+                ""ProductNameBold"": ""Westmalle"",
+                ""ProductNameThin"": ""Tripel"",
+                ""Category"": ""Öl"",
+                ""ProductNumberShort"": ""1656"",
+                ""ProducerName"": ""Abbey of Westmalle"",
+                ""SupplierName"": ""Galatea AB"",
+                ""IsKosher"": false,
+                ""BottleTextShort"": ""Flaska"",
+                ""Seal"": ""Kronkapsyl"",
+                ""RestrictedParcelQuantity"": 0,
+                ""IsOrganic"": false,
+                ""IsEthical"": false,
+                ""EthicalLabel"": null,
+                ""IsWebLaunch"": false,
+                ""SellStartDate"": ""2020-05-06T00:00:00"",
+                ""IsCompletelyOutOfStock"": false,
+                ""IsTemporaryOutOfStock"": false,
+                ""AlcoholPercentage"": 9.50,
+                ""Volume"": 330.00,
+                ""Price"": 29.90,
+                ""Country"": ""Belgien"",
+                ""OriginLevel1"": null,
+                ""OriginLevel2"": null,
+                ""Vintage"": 0,
+                ""SubCategory"": ""Öl"",
+                ""Type"": ""Ale belgisk stil"",
+                ""Style"": ""Trippel"",
+                ""AssortmentText"": ""Tillfälligt sortiment"",
+                ""BeverageDescriptionShort"": ""Öl, Ale, Trippel"",
+                ""Usage"": ""Serveras vid 10-12°C till rätter av ljust kött eller lamm, eller till lagrade hårdostar."",
+                ""Taste"": ""Nyanserad, fruktig, kryddig smak med liten sötma, inslag av kryddnejlika, aprikos, honung, banan, ljust bröd och citrus."",
+                ""Assortment"": ""TSV"",
+                ""RecycleFee"": 0.00,
+                ""IsManufacturingCountry"": true,
+                ""IsRegionalRestricted"": false,
+                ""IsInStoreSearchAssortment"": null,
+                ""IsNews"": false
+            },{
+                ""ProductId"": ""2325650"",
+                ""ProductNumber"": ""49102"",
+                ""ProductNameBold"": ""Bowmore"",
+                ""ProductNameThin"": ""12 Years"",
+                ""Category"": ""Sprit"",
+                ""ProductNumberShort"": ""491"",
+                ""ProducerName"": ""Jim Beam Brands"",
+                ""SupplierName"": ""Edrington Sweden AB"",
+                ""IsKosher"": false,
+                ""BottleTextShort"": ""Flaska"",
+                ""Seal"": null,
+                ""RestrictedParcelQuantity"": 0,
+                ""IsOrganic"": false,
+                ""IsEthical"": false,
+                ""EthicalLabel"": null,
+                ""IsWebLaunch"": false,
+                ""SellStartDate"": ""2017-09-01T00:00:00"",
+                ""IsCompletelyOutOfStock"": false,
+                ""IsTemporaryOutOfStock"": false,
+                ""AlcoholPercentage"": 40.00,
+                ""Volume"": 350.00,
+                ""Price"": 209.00,
+                ""Country"": ""Storbritannien"",
+                ""OriginLevel1"": ""Skottland"",
+                ""OriginLevel2"": ""Islay"",
+                ""Vintage"": 0,
+                ""SubCategory"": ""Whisky"",
+                ""Type"": ""Maltwhisky"",
+                ""Style"": null,
+                ""AssortmentText"": ""Fast sortiment"",
+                ""BeverageDescriptionShort"": ""Maltwhisky"",
+                ""Usage"": ""Serveras rumstempererad."",
+                ""Taste"": ""Nyanserad, tydligt rökig smak med fatkaraktär, inslag av ljunghonung, torkade aprikoser, jod, pomerans, vaniljfudge och tjära."",
+                ""Assortment"": ""FS"",
+                ""RecycleFee"": 0.00,
+                ""IsManufacturingCountry"": true,
+                ""IsRegionalRestricted"": false,
+                ""IsInStoreSearchAssortment"": null,
+                ""IsNews"": false
+            }]");
         }
     }
 }
