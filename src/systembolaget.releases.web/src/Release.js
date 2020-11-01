@@ -33,6 +33,10 @@ export class Release extends Component {
     }
 
     replaceAll(string, search, replace) {
+        if(string === null){
+            return "";
+        }
+        
         return string.split(search).join(replace);
     }
 
@@ -44,7 +48,7 @@ export class Release extends Component {
                     {this.state.beverages.map(beverage => (
                         <li className="list-group-item" key={beverage.ArticleNumber}>
                             <span className="font-weight-bold">{this.replaceAll(beverage.Name,'&amp;','&')} {this.replaceAll(beverage.SecondaryName,'&amp;','&')}</span> <span className="font-weight-light">({this.replaceAll(beverage.Type,'&amp;','&')})</span><br/>
-                            <span className="font-weight-normal">{beverage.AlcoholContent}, {beverage.VolumeMl} ml, {beverage.PriceIncVat} kr ({beverage.ProductRangeAbbreviation})</span><br/>
+                            <span className="font-weight-normal">{beverage.AlcoholContent}%, {beverage.VolumeMl} ml, {beverage.PriceIncVat} kr ({beverage.ProductRangeAbbreviation})</span><br/>
                             <span className="small">{beverage.Producer}, {beverage.OriginCountry}</span><br/> 
                             <span className="small">Nr {beverage.ArticleNumber}</span><br/> 
                         </li>
